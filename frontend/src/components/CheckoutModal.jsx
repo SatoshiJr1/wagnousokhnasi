@@ -16,8 +16,31 @@ const CheckoutModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send the order to the backend
-    alert(`Commande envoyée pour ${formData.name} ! Mode: ${deliveryMode === 'delivery' ? 'Livraison' : 'À emporter'}`);
+
+    // Construct WhatsApp message
+    let message = `*Nouvelle Commande Wagnou Sokhna Si*\n\n`;
+    message += `👤 *Client:* ${formData.name}\n`;
+    message += `📞 *Tel:* ${formData.phone}\n`;
+    message += `🚚 *Mode:* ${deliveryMode === 'delivery' ? 'Livraison' : 'À emporter'}\n`;
+
+    if (deliveryMode === 'delivery') {
+      message += `📍 *Adresse:* ${formData.address}\n`;
+    }
+
+    message += `\n🛒 *Détails de la commande:*\n`;
+    cart.forEach(item => {
+      message += `- ${item.quantity}x ${item.name} (${(item.price * item.quantity).toLocaleString()} FCFA)\n`;
+    });
+
+    message += `\n💰 *Total:* ${cartTotal.toLocaleString()} FCFA`;
+
+    // Encode and open WhatsApp
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/221788277985?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, '_blank');
+
+    // Clear cart and close modal
     clearCart();
     setIsCheckoutOpen(false);
   };
