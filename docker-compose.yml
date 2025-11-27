@@ -1,0 +1,18 @@
+services:
+  wagnousokhnasi-frontend:
+    build: ./frontend
+    container_name: wagnousokhnasi-frontend
+    restart: unless-stopped
+    environment:
+      # - NODE_ENV=production
+      - VIRTUAL_HOST=wagnousokhnasi.com,www.wagnousokhnasi.com
+      - LETSENCRYPT_HOST=wagnousokhnasi.com,www.wagnousokhnasi.com
+      - LETSENCRYPT_EMAIL=skhadimsall@gmail.com
+    volumes:
+      - ./frontend/logs:/app/logs
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true

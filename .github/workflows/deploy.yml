@@ -1,0 +1,93 @@
+name: Deploy wagnousokhnasi
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  PROJECT_PATH: /srv/projects/wagnousokhnasi
+
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          frontend:
+            - 'frontend/**'
+          backend:
+            - 'backend/**'
+
+  deploy-frontend:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.frontend == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create deployment package
+      run: |
+        mkdir -p temp-deploy
+        # Copy frontend and root docker-compose
+        rsync -av --exclude=node_modules --exclude=.git --exclude=.github ./frontend temp-deploy/
+        cp docker-compose.yml temp-deploy/
+        cd temp-deploy
+        tar -czf ../deploy-frontend.tar.gz .
+        cd ..
+        rm -rf temp-deploy
+
+    - name: Upload to server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        source: "deploy-frontend.tar.gz"
+        target: "/tmp/"
+
+    - name: Deploy Frontend
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          mkdir -p ${{ env.PROJECT_PATH }}
+          cd ${{ env.PROJECT_PATH }}
+
+          # Extract to temporary location to preserve other services if needed
+          mkdir -p temp_extract
+          tar -xzf /tmp/deploy-frontend.tar.gz -C temp_extract
+
+          # Update docker-compose.yml
+          mv temp_extract/docker-compose.yml .
+
+          # Update frontend code
+          rm -rf frontend
+          mv temp_extract/frontend .
+          rm -rf temp_extract
+          rm /tmp/deploy-frontend.tar.gz
+
+          # Rebuild and restart frontend
+          docker compose up -d --build wagnousokhnasi-frontend
+
+  deploy-backend:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.backend == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Echo Backend Deploy
+      run: echo "Backend deployment not yet implemented"

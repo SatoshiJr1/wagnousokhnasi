@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Conserver la fraîcheur du poisson",
+    "content": "Rincez le poisson à l'eau citronnée avant de le congeler pour garder sa texture ferme.",
+    "image": "https://images.unsplash.com/photo-1535048632866-8a36082b348a?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 2,
+    "title": "Un riz toujours parfait",
+    "content": "Lavez le riz jusqu'à ce que l'eau soit claire pour enlever l'excès d'amidon et éviter qu'il ne colle.",
+    "image": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 3,
+    "title": "Épices torréfiées",
+    "content": "Faites chauffer vos épices à sec dans une poêle quelques secondes avant de les utiliser pour décupler leurs arômes.",
+    "image": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=800"
+  }
+]

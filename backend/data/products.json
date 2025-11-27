@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "name": "Plateau Amuse-bouches Royal",
+    "category": "Amuse-bouches",
+    "description": "Assortiment de fatayas, nems et acras maison.",
+    "price": 15000,
+    "image": "https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 2,
+    "name": "Seafood Bowl Signature",
+    "category": "Seafood bowls",
+    "description": "Riz parfumé, crevettes grillées, calamars, légumes croquants.",
+    "price": 8500,
+    "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 3,
+    "name": "Bol de Saison Végétarien",
+    "category": "Bols de saison",
+    "description": "Quinoa, avocat, patate douce rôtie, sauce tahini.",
+    "price": 6000,
+    "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 4,
+    "name": "Crevettes Pasta à l'Ail",
+    "category": "Crevettes pasta",
+    "description": "Linguine fraîches, crevettes sautées à l'ail et persil.",
+    "price": 9000,
+    "image": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 5,
+    "name": "Miel de Casamance Bio",
+    "category": "Épicerie bio",
+    "description": "Miel pur récolté traditionnellement.",
+    "price": 4500,
+    "image": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 6,
+    "name": "Jus Bissap Rouge Menthe",
+    "category": "Jus naturels “Tonus +”",
+    "description": "Rafraîchissant et riche en vitamine C.",
+    "price": 1500,
+    "image": "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 7,
+    "name": "Jus Bouye Onctueux",
+    "category": "Jus naturels “Tonus +”",
+    "description": "Nectar de fruit de baobab, énergie pure.",
+    "price": 1800,
+    "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 8,
+    "name": "Mélange Fruits Secs Énergie",
+    "category": "Fruits secs",
+    "description": "Amandes, noix de cajou, raisins secs.",
+    "price": 3000,
+    "image": "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 9,
+    "name": "Nougat Sésame Maison",
+    "category": "Nougat / Coco lait",
+    "description": "Croustillant et fondant, au miel local.",
+    "price": 2000,
+    "image": "https://images.unsplash.com/photo-1582650625119-3a31f8fa2699?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 10,
+    "name": "E-book Recettes Sénégalaises",
+    "category": "Recettes",
+    "description": "Les secrets de la cuisine de Wagnou Sokhna Si.",
+    "price": 5000,
+    "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 11,
+    "name": "Huile de Touloucouna",
+    "category": "Huiles bio",
+    "description": "Huile thérapeutique traditionnelle.",
+    "price": 7000,
+    "image": "https://images.unsplash.com/photo-1474979266404-7cadd259c308?auto=format&fit=crop&q=80&w=800"
+  },
+  {
+    "id": 12,
+    "name": "Consulting Menu Semaine",
+    "category": "Consulting culinaire",
+    "description": "Planification de repas équilibrés pour la famille.",
+    "price": 20000,
+    "image": "https://images.unsplash.com/photo-1556910103-1c02745a30bf?auto=format&fit=crop&q=80&w=800"
+  }
+]

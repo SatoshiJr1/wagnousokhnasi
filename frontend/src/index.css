@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme {
+  --color-wagnou-primary: #D48C8C;
+  --color-wagnou-secondary: #C5A059;
+  --color-wagnou-bg: #FDFBF7;
+  --color-wagnou-text: #4A4A4A;
+  --color-wagnou-card: #FFFFFF;
+
+  --font-sans: Inter, sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+@layer base {
+  body {
+    @apply bg-wagnou-bg text-wagnou-text font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-wagnou-text;
+  }
+}
+
+/* Custom Scrollbar for elegant feel */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FDFBF7;
+}
+::-webkit-scrollbar-thumb {
+  background: #D48C8C;
+  border-radius: 3px;
+}
+
+/* Utilities */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+}
