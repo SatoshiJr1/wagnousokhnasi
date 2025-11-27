@@ -1,9 +1,10 @@
-import { BookOpen, Loader2, Search, ShoppingBag } from 'lucide-react';
+import { BookOpen, Search, ShoppingBag } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import api from '../api';
 import CartSidebar from '../components/CartSidebar';
 import Hero from '../components/Hero';
 import ProductCard from '../components/ProductCard';
+import ProductSkeleton from '../components/ProductSkeleton';
 import { useCart } from '../context/CartContext';
 
 // Fallback data in case API fails
@@ -157,14 +158,6 @@ const Home = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen bg-wagnou-bg">
-        <Loader2 className="animate-spin text-wagnou-primary" size={48} />
-      </div>
-    );
-  }
-
   return (
     <div className="pb-24 bg-gray-50 min-h-screen">
       <Hero />
@@ -232,12 +225,18 @@ const Home = () => {
 
             {/* Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+              {loading ? (
+                Array.from({ length: 6 }).map((_, index) => (
+                  <ProductSkeleton key={index} />
+                ))
+              ) : (
+                filteredProducts.map(product => (
+                  <ProductCard key={product.id} product={product} />
+                ))
+              )}
             </div>
 
-            {filteredProducts.length === 0 && (
+            {!loading && filteredProducts.length === 0 && (
               <div className="text-center py-20">
                 <div className="inline-block p-6 rounded-full bg-gray-100 mb-4">
                   <ShoppingBag className="text-gray-400" size={40} />
@@ -248,7 +247,7 @@ const Home = () => {
             )}
 
             {/* Services & Consulting Section */}
-            {serviceProducts.length > 0 && (
+            {!loading && serviceProducts.length > 0 && (
               <div id="services-section" className="mt-16 pt-10 border-t border-gray-200 scroll-mt-28">
                 <div className="flex items-center gap-3 mb-8">
                   <div className="h-8 w-1 bg-wagnou-primary rounded-full"></div>
