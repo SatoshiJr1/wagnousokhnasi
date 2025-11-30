@@ -93,12 +93,23 @@ const Hero = () => {
             </h1>
 
             {/* Status & Cuisine */}
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-3 mb-4">
                 <span className="px-3 py-0.5 bg-green-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider shadow-sm">
                 Ouvert
                 </span>
                 <span className="text-xs text-gray-500 font-medium">• Cuisine Sénégalaise & Fusion</span>
             </div>
+
+            <p className="text-gray-800 text-lg md:text-xl font-serif font-medium mb-6">
+              Le goût authentique, livré jusqu’à vous.
+            </p>
+
+            <button
+              onClick={scrollToProducts}
+              className="bg-gray-900 text-white px-8 py-3 rounded-full font-bold text-sm md:text-base shadow-xl hover:bg-wagnou-primary hover:scale-105 transition-all duration-300 mb-6"
+            >
+              Commander maintenant
+            </button>
 
             {/* Info Cards - Compact & Elegant */}
             <div className="flex flex-nowrap justify-center items-center gap-2 md:gap-3 text-[10px] md:text-xs text-gray-500 font-medium w-full overflow-x-auto scrollbar-hide px-2">
@@ -114,7 +125,7 @@ const Hero = () => {
                 <div className="w-px h-3 bg-gray-300 shrink-0"></div>
                 <div className="flex items-center gap-1 whitespace-nowrap px-1 py-1 rounded-md hover:bg-gray-50 transition-colors cursor-default shrink-0">
                   <Phone size={12} className="text-wagnou-primary md:w-3.5 md:h-3.5" />
-                  <span>+221 77 000 00 00</span>
+                  <span>+221 78 827 79 85</span>
                 </div>
             </div>
 
@@ -163,14 +174,10 @@ const Hero = () => {
             </div>
           </div>
 
-          <p className="text-gray-600 text-sm md:text-base mb-8 font-light leading-relaxed max-w-xl mx-auto italic">
-            "Des bols, des saveurs, une énergie : vivez mieux, mangez vrai."
-          </p>
-
           {/* Scroll Down Arrow */}
           <button
             onClick={scrollToProducts}
-            className="animate-bounce p-2 text-gray-300 hover:text-wagnou-primary transition-colors cursor-pointer"
+            className="animate-bounce p-2 text-gray-300 hover:text-wagnou-primary transition-colors cursor-pointer mt-4"
             aria-label="Voir les produits"
           >
             <ChevronDown size={28} strokeWidth={1.5} />

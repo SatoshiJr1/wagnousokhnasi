@@ -13,7 +13,7 @@ const SAMPLE_PRODUCTS = [
     "id": 1,
     "name": "Plateau Amuse-bouches Royal",
     "category": "Amuse-bouches",
-    "description": "Assortiment de fatayas, nems et acras maison.",
+    "description": "Un assortiment prestige de fatayas croustillants, nems dorés et acras moelleux, accompagnés de nos sauces maison.",
     "price": 15000,
     "image": "https://images.unsplash.com/photo-1541529086526-db283c563270?auto=format&fit=crop&q=80&w=800"
   },
@@ -21,7 +21,7 @@ const SAMPLE_PRODUCTS = [
     "id": 2,
     "name": "Seafood Bowl Signature",
     "category": "Seafood bowls",
-    "description": "Riz parfumé, crevettes grillées, calamars, légumes croquants.",
+    "description": "L'excellence de la mer : crevettes tigrées grillées, calamars tendres et légumes croquants sur un lit de riz parfumé.",
     "price": 8500,
     "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=800"
   },
@@ -29,7 +29,7 @@ const SAMPLE_PRODUCTS = [
     "id": 3,
     "name": "Bol de Saison Végétarien",
     "category": "Bols de saison",
-    "description": "Quinoa, avocat, patate douce rôtie, sauce tahini.",
+    "description": "Une explosion de couleurs : quinoa, avocat crémeux, patate douce rôtie et notre sauce tahini secrète.",
     "price": 6000,
     "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800"
   },
@@ -37,7 +37,7 @@ const SAMPLE_PRODUCTS = [
     "id": 4,
     "name": "Crevettes Pasta à l'Ail",
     "category": "Crevettes pasta",
-    "description": "Linguine fraîches, crevettes sautées à l'ail et persil.",
+    "description": "Linguine fraîches enrobées d'une sauce à l'ail confit, persil frais et crevettes sautées à la minute.",
     "price": 9000,
     "image": "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&q=80&w=800"
   },
@@ -45,7 +45,7 @@ const SAMPLE_PRODUCTS = [
     "id": 5,
     "name": "Miel de Casamance Bio",
     "category": "Épicerie bio",
-    "description": "Miel pur récolté traditionnellement.",
+    "description": "L'or liquide de la Casamance, récolté traditionnellement pour une pureté et un goût incomparables.",
     "price": 4500,
     "image": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=800"
   },
@@ -53,7 +53,7 @@ const SAMPLE_PRODUCTS = [
     "id": 6,
     "name": "Jus Bissap Rouge Menthe",
     "category": "Jus naturels “Tonus +”",
-    "description": "Rafraîchissant et riche en vitamine C.",
+    "description": "L'équilibre parfait entre l'acidité de l'hibiscus et la fraîcheur de la menthe. Un boost de vitamine C.",
     "price": 1500,
     "image": "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&q=80&w=800"
   },
@@ -61,7 +61,7 @@ const SAMPLE_PRODUCTS = [
     "id": 7,
     "name": "Jus Bouye Onctueux",
     "category": "Jus naturels “Tonus +”",
-    "description": "Nectar de fruit de baobab, énergie pure.",
+    "description": "La douceur veloutée du fruit de baobab (pain de singe), riche en calcium et en énergie naturelle.",
     "price": 1800,
     "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&q=80&w=800"
   },
@@ -69,7 +69,7 @@ const SAMPLE_PRODUCTS = [
     "id": 8,
     "name": "Mélange Fruits Secs Énergie",
     "category": "Fruits secs",
-    "description": "Amandes, noix de cajou, raisins secs.",
+    "description": "Le snack sain idéal : amandes croquantes, noix de cajou et raisins secs pour une énergie durable.",
     "price": 3000,
     "image": "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&q=80&w=800"
   },
@@ -77,7 +77,7 @@ const SAMPLE_PRODUCTS = [
     "id": 9,
     "name": "Nougat Sésame Maison",
     "category": "Nougat / Coco lait",
-    "description": "Croustillant et fondant, au miel local.",
+    "description": "Une confiserie artisanale alliant le croquant du sésame et la douceur du miel local.",
     "price": 2000,
     "image": "https://images.unsplash.com/photo-1582650625119-3a31f8fa2699?auto=format&fit=crop&q=80&w=800"
   },
@@ -85,7 +85,7 @@ const SAMPLE_PRODUCTS = [
     "id": 10,
     "name": "E-book Recettes Sénégalaises",
     "category": "Recettes",
-    "description": "Les secrets de la cuisine de Wagnou Sokhna Si.",
+    "description": "Découvrez les secrets de la cuisine de Wagnou Sokhna Si avec nos recettes exclusives et astuces de chef.",
     "price": 5000,
     "image": "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&q=80&w=800"
   },
@@ -93,7 +93,7 @@ const SAMPLE_PRODUCTS = [
     "id": 11,
     "name": "Huile de Touloucouna",
     "category": "Huiles bio",
-    "description": "Huile thérapeutique traditionnelle.",
+    "description": "Une huile thérapeutique ancestrale, reconnue pour ses vertus médicinales et cosmétiques exceptionnelles.",
     "price": 7000,
     "image": "https://images.unsplash.com/photo-1474979266404-7cadd259c308?auto=format&fit=crop&q=80&w=800"
   },
@@ -101,7 +101,7 @@ const SAMPLE_PRODUCTS = [
     "id": 12,
     "name": "Consulting Menu Semaine",
     "category": "Consulting culinaire",
-    "description": "Planification de repas équilibrés pour la famille.",
+    "description": "Un accompagnement personnalisé pour planifier des repas équilibrés et savoureux pour toute la famille.",
     "price": 20000,
     "image": "https://images.unsplash.com/photo-1556910103-1c02745a30bf?auto=format&fit=crop&q=80&w=800"
   }
@@ -152,10 +152,13 @@ const Home = () => {
   const { addToCart } = useCart();
 
   const scrollToServices = () => {
-    const element = document.getElementById('services-section');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    setSelectedCategory('Tout');
+    setTimeout(() => {
+      const element = document.getElementById('services-section');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
@@ -224,63 +227,91 @@ const Home = () => {
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <div className="space-y-12">
               {loading ? (
-                Array.from({ length: 6 }).map((_, index) => (
-                  <ProductSkeleton key={index} />
-                ))
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <ProductSkeleton key={index} />
+                  ))}
+                </div>
+              ) : selectedCategory === 'Tout' ? (
+                // Grouped view
+                <>
+                  {categories.filter(cat => cat !== 'Tout').map(cat => {
+                    const catProducts = filteredProducts.filter(p => p.category === cat);
+                    if (catProducts.length === 0) return null;
+                    return (
+                      <div key={cat} className="scroll-mt-28" id={`cat-${cat}`}>
+                        <div className="flex items-center gap-3 mb-6">
+                           <h3 className="font-serif text-xl font-bold text-gray-800 bg-gray-100 px-4 py-1 rounded-full">
+                             {cat}
+                           </h3>
+                           <div className="h-px bg-gray-200 flex-grow"></div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                          {catProducts.map(product => (
+                            <ProductCard key={product.id} product={product} />
+                          ))}
+                        </div>
+                      </div>
+                    )
+                  })}
+
+                  {/* Services Section integrated at the end of the list */}
+                  {serviceProducts.length > 0 && (
+                    <div id="services-section" className="scroll-mt-28 pt-4">
+                      <div className="flex items-center gap-3 mb-8">
+                        <div className="h-8 w-1 bg-wagnou-primary rounded-full"></div>
+                        <h2 className="font-serif text-2xl md:text-3xl font-bold text-gray-900">
+                          Nos Services & E-books
+                        </h2>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {serviceProducts.map(service => (
+                          <div key={service.id} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row gap-6 items-center md:items-start">
+                            <div className="w-full md:w-1/3 h-40 rounded-xl overflow-hidden shrink-0">
+                              <img src={service.image} alt={service.name} className="w-full h-full object-cover" />
+                            </div>
+                            <div className="flex-grow text-center md:text-left">
+                              <span className="inline-block px-3 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded-full mb-2 uppercase tracking-wider">
+                                {service.category}
+                              </span>
+                              <h3 className="font-serif text-xl font-bold text-gray-900 mb-2">{service.name}</h3>
+                              <p className="text-gray-500 text-sm mb-4 leading-relaxed">{service.description}</p>
+                              <div className="flex items-center justify-center md:justify-between">
+                                <span className="font-bold text-lg text-gray-900">{service.price.toLocaleString()} FCFA</span>
+                                <button
+                                  onClick={() => addToCart(service)}
+                                  className="ml-4 px-5 py-2 bg-gray-900 text-white text-sm font-bold rounded-lg hover:bg-wagnou-primary transition-colors cursor-pointer"
+                                >
+                                  Commander
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
               ) : (
-                filteredProducts.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))
+                // Single category view
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {filteredProducts.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
               )}
             </div>
 
-            {!loading && filteredProducts.length === 0 && (
+            {!loading && filteredProducts.length === 0 && selectedCategory !== 'Tout' && (
               <div className="text-center py-20">
                 <div className="inline-block p-6 rounded-full bg-gray-100 mb-4">
                   <ShoppingBag className="text-gray-400" size={40} />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">Aucun produit trouvé</h3>
                 <p className="text-gray-500">Essayez de modifier vos filtres de recherche.</p>
-              </div>
-            )}
-
-            {/* Services & Consulting Section */}
-            {!loading && serviceProducts.length > 0 && (
-              <div id="services-section" className="mt-16 pt-10 border-t border-gray-200 scroll-mt-28">
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="h-8 w-1 bg-wagnou-primary rounded-full"></div>
-                  <h2 className="font-serif text-2xl md:text-3xl font-bold text-gray-900">
-                    Nos Services & E-books
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {serviceProducts.map(service => (
-                    <div key={service.id} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row gap-6 items-center md:items-start">
-                      <div className="w-full md:w-1/3 h-40 rounded-xl overflow-hidden shrink-0">
-                        <img src={service.image} alt={service.name} className="w-full h-full object-cover" />
-                      </div>
-                      <div className="flex-grow text-center md:text-left">
-                        <span className="inline-block px-3 py-1 bg-orange-100 text-orange-700 text-xs font-bold rounded-full mb-2 uppercase tracking-wider">
-                          {service.category}
-                        </span>
-                        <h3 className="font-serif text-xl font-bold text-gray-900 mb-2">{service.name}</h3>
-                        <p className="text-gray-500 text-sm mb-4 leading-relaxed">{service.description}</p>
-                        <div className="flex items-center justify-center md:justify-between">
-                          <span className="font-bold text-lg text-gray-900">{service.price.toLocaleString()} FCFA</span>
-                          <button
-                            onClick={() => addToCart(service)}
-                            className="ml-4 px-5 py-2 bg-gray-900 text-white text-sm font-bold rounded-lg hover:bg-wagnou-primary transition-colors cursor-pointer"
-                          >
-                            Commander
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             )}
           </div>
