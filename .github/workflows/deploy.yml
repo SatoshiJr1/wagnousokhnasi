@@ -62,7 +62,6 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          mkdir -p ${{ env.PROJECT_PATH }}
           cd ${{ env.PROJECT_PATH }}
 
           # Extract to temporary location to preserve other services if needed

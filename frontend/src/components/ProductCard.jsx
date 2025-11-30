@@ -1,8 +1,16 @@
-import { Plus } from 'lucide-react';
+import { Check, Plus } from 'lucide-react';
+import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 
 const ProductCard = ({ product }) => {
   const { addToCart, setViewedProduct } = useCart();
+  const [isAdded, setIsAdded] = useState(false);
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 1500);
+  };
 
   return (
     <div className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full">
@@ -39,11 +47,16 @@ const ProductCard = ({ product }) => {
           </span>
 
           <button
-            onClick={() => addToCart(product)}
-            className="flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-wagnou-primary hover:scale-105 transition-all duration-300 shadow-md cursor-pointer"
+            onClick={handleAddToCart}
+            disabled={isAdded}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 shadow-md cursor-pointer ${
+              isAdded
+                ? 'bg-green-600 text-white scale-105'
+                : 'bg-black text-white hover:bg-wagnou-primary hover:scale-105'
+            }`}
           >
-            <Plus size={16} />
-            Ajouter
+            {isAdded ? <Check size={16} /> : <Plus size={16} />}
+            {isAdded ? 'Ajouté' : 'Ajouter'}
           </button>
         </div>
       </div>
