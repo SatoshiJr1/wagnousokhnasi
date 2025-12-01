@@ -31,25 +31,31 @@ const Layout = ({ children }) => {
       <ReloadPrompt />
 
       {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 md:hidden pb-safe">
+      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-gray-100 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 md:hidden pb-safe">
         <div className="flex justify-around items-center h-16">
           <Link
             to="/"
-            className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${isActive('/') ? 'text-wagnou-primary' : 'text-gray-400'}`}
+            className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all duration-300 ${
+              isActive('/') ? 'text-wagnou-primary bg-wagnou-primary/10' : 'text-gray-400 hover:bg-gray-50'
+            }`}
           >
             <Home size={24} strokeWidth={isActive('/') ? 2.5 : 2} />
             <span className="text-[10px] font-medium">Accueil</span>
           </Link>
           <Link
             to="/astuces"
-            className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${isActive('/astuces') ? 'text-wagnou-primary' : 'text-gray-400'}`}
+            className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all duration-300 ${
+              isActive('/astuces') ? 'text-wagnou-primary bg-wagnou-primary/10' : 'text-gray-400 hover:bg-gray-50'
+            }`}
           >
             <Lightbulb size={24} strokeWidth={isActive('/astuces') ? 2.5 : 2} />
             <span className="text-[10px] font-medium">Astuces</span>
           </Link>
           <Link
             to="/login"
-            className={`flex flex-col items-center justify-center w-full h-full space-y-1 ${isActive('/login') ? 'text-wagnou-primary' : 'text-gray-400'}`}
+            className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-all duration-300 ${
+              isActive('/login') ? 'text-wagnou-primary bg-wagnou-primary/10' : 'text-gray-400 hover:bg-gray-50'
+            }`}
           >
             <User size={24} strokeWidth={isActive('/login') ? 2.5 : 2} />
             <span className="text-[10px] font-medium">Compte</span>
