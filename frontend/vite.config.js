@@ -9,6 +9,14 @@ export default defineConfig({
     VitePWA({
       registerType: 'prompt',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      workbox: {
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: false,
+      },
+      devOptions: {
+        enabled: true
+      },
       manifest: {
         name: 'Wagnou Sokhna Si',
         short_name: 'Wagnou',

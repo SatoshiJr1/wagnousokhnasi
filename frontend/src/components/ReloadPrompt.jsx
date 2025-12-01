@@ -1,7 +1,10 @@
 import { RefreshCw, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
 const ReloadPrompt = () => {
+  const [registration, setRegistration] = useState(null);
+
   const {
     offlineReady: [offlineReady, setOfflineReady],
     needRefresh: [needRefresh, setNeedRefresh],
@@ -9,11 +12,22 @@ const ReloadPrompt = () => {
   } = useRegisterSW({
     onRegistered(r) {
       console.log('SW Registered: ' + r);
+      setRegistration(r);
     },
     onRegisterError(error) {
       console.log('SW registration error', error);
     },
   });
+
+  useEffect(() => {
+    if (registration) {
+      // Check for updates every minute
+      const interval = setInterval(() => {
+        registration.update();
+      }, 60 * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [registration]);
 
   const close = () => {
     setOfflineReady(false);
