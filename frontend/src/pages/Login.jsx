@@ -25,8 +25,8 @@ const Login = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
-      <SEO 
-        title="Connexion Admin - Wagnou Sokhna Si" 
+      <SEO
+        title="Connexion Admin - Wagnou Sokhna Si"
         description="Page de connexion pour l'administration de Wagnou Sokhna Si."
         noindex={true}
       />

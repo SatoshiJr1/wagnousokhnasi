@@ -4,7 +4,6 @@ services:
     container_name: wagnousokhnasi-frontend
     restart: unless-stopped
     environment:
-      # - NODE_ENV=production
       - VIRTUAL_HOST=wagnousokhnasi.com,www.wagnousokhnasi.com
       - LETSENCRYPT_HOST=wagnousokhnasi.com,www.wagnousokhnasi.com
       - LETSENCRYPT_EMAIL=skhadimsall@gmail.com
@@ -12,7 +11,27 @@ services:
       - ./frontend/logs:/app/logs
     networks:
       - nginx-proxy
+      - fitsen-network
+    depends_on:
+      - wagnousokhnasi-backend
+
+  wagnousokhnasi-backend:
+    build: ./backend
+    container_name: wagnousokhnasi-backend
+    restart: unless-stopped
+    environment:
+      - PORT=3001
+      - DB_HOST=fitsen-postgresql
+      - DB_PORT=5432
+      - DB_NAME=wagnousokhnasi
+      - DB_USER=sokhnasi_user
+      - DB_PASSWORD=sokhnasi_pass
+    networks:
+      - nginx-proxy
+      - fitsen-network
 
 networks:
   nginx-proxy:
     external: true
+  fitsen-network:
+    driver: bridge

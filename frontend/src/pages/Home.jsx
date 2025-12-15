@@ -164,8 +164,8 @@ const Home = () => {
 
   return (
     <div className="pb-24 bg-gray-50 min-h-screen">
-      <SEO 
-        title="Accueil" 
+      <SEO
+        title="Accueil"
         description="Commandez les meilleurs plats sénégalais à Dakar : Thieboudienne, Yassa, amuse-bouches et jus locaux. Livraison rapide et saveurs authentiques."
         keywords="restaurant sénégalais, livraison dakar, thieboudienne, yassa, amuse-bouches, jus locaux"
       />

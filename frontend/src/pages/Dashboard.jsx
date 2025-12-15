@@ -61,8 +61,8 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-8">
-      <SEO 
-        title="Tableau de Bord - Wagnou Sokhna Si" 
+      <SEO
+        title="Tableau de Bord - Wagnou Sokhna Si"
         noindex={true}
       />
       <div className="flex justify-between items-center">

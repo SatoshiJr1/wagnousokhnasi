@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const db = require('./config/db');
 
 const app = express();
 const PORT = 3001;
@@ -11,6 +12,21 @@ const SECRET_KEY = 'wagnou_secret_key_simple'; // In production, use .env
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// Health Check & DB Test
+app.get('/api/health', async (req, res) => {
+  try {
+    const result = await db.query('SELECT NOW()');
+    res.json({
+      status: 'ok',
+      timestamp: new Date(),
+      db_time: result.rows[0].now
+    });
+  } catch (error) {
+    console.error('DB Connection Error:', error);
+    res.status(500).json({ status: 'error', message: 'Database connection failed' });
+  }
+});
 
 // Helper to read JSON files
 const readData = (file) => {

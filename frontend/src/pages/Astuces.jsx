@@ -63,8 +63,8 @@ const Astuces = () => {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <SEO 
-        title="Astuces & Conseils - Wagnou Sokhna Si" 
+      <SEO
+        title="Astuces & Conseils - Wagnou Sokhna Si"
         description="Découvrez nos secrets et astuces pour sublimer votre cuisine au quotidien avec les produits Wagnou Sokhna Si."
         keywords="astuces cuisine, conseils cuisine, recettes sénégalaises, wagnou sokhna si, cuisine facile"
       />
