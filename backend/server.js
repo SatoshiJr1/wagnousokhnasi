@@ -27,6 +27,20 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
+// Middleware d'authentification
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) return res.sendStatus(401);
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
 // --- ROUTES ---
 
 // GET Products
@@ -48,6 +62,17 @@ app.get('/api/astuces', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erreur lecture astuces' });
+  }
+});
+
+// GET Users (Protected)
+app.get('/api/users', authenticateToken, async (req, res) => {
+  try {
+    const result = await db.query('SELECT id, email, created_at FROM users ORDER BY id DESC');
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur lecture utilisateurs' });
   }
 });
 
@@ -89,14 +114,16 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // GET Dashboard Stats
-app.get('/api/dashboard/stats', async (req, res) => {
+app.get('/api/dashboard/stats', authenticateToken, async (req, res) => {
   try {
     const productsCount = await db.query('SELECT COUNT(*) FROM products');
     const astucesCount = await db.query('SELECT COUNT(*) FROM astuces');
+    const usersCount = await db.query('SELECT COUNT(*) FROM users');
 
     res.json({
       productsCount: parseInt(productsCount.rows[0].count),
       astucesCount: parseInt(astucesCount.rows[0].count),
+      usersCount: parseInt(usersCount.rows[0].count),
       ordersCount: 0 // Mock for now
     });
   } catch (error) {
@@ -105,11 +132,12 @@ app.get('/api/dashboard/stats', async (req, res) => {
   }
 });
 
-// --- ADMIN ROUTES (Simplified) ---
+// --- ADMIN ROUTES (Protected) ---
 
-// POST Product (Protected)
-app.post('/api/products', async (req, res) => {
-  // TODO: Add middleware to verify token
+// --- PRODUCTS ---
+
+// POST Product
+app.post('/api/products', authenticateToken, async (req, res) => {
   const { name, category, description, price, image } = req.body;
   try {
     const result = await db.query(
@@ -123,9 +151,27 @@ app.post('/api/products', async (req, res) => {
   }
 });
 
-// DELETE Product (Protected)
-app.delete('/api/products/:id', async (req, res) => {
-  // TODO: Add middleware to verify token
+// PUT Product
+app.put('/api/products/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  const { name, category, description, price, image } = req.body;
+  try {
+    const result = await db.query(
+      'UPDATE products SET name = $1, category = $2, description = $3, price = $4, image = $5 WHERE id = $6 RETURNING *',
+      [name, category, description, price, image, id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Produit non trouvé' });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur modification produit' });
+  }
+});
+
+// DELETE Product
+app.delete('/api/products/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
   try {
     await db.query('DELETE FROM products WHERE id = $1', [id]);
@@ -133,6 +179,107 @@ app.delete('/api/products/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erreur suppression produit' });
+  }
+});
+
+// --- ASTUCES ---
+
+// POST Astuce
+app.post('/api/astuces', authenticateToken, async (req, res) => {
+  const { title, content, image } = req.body;
+  try {
+    const result = await db.query(
+      'INSERT INTO astuces (title, content, image) VALUES ($1, $2, $3) RETURNING *',
+      [title, content, image]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur création astuce' });
+  }
+});
+
+// PUT Astuce
+app.put('/api/astuces/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  const { title, content, image } = req.body;
+  try {
+    const result = await db.query(
+      'UPDATE astuces SET title = $1, content = $2, image = $3 WHERE id = $4 RETURNING *',
+      [title, content, image, id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Astuce non trouvée' });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur modification astuce' });
+  }
+});
+
+// DELETE Astuce
+app.delete('/api/astuces/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  try {
+    await db.query('DELETE FROM astuces WHERE id = $1', [id]);
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur suppression astuce' });
+  }
+});
+
+// --- USERS ---
+
+// POST User
+app.post('/api/users', authenticateToken, async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    const result = await db.query(
+      'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email, created_at',
+      [email, hash]
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur création utilisateur' });
+  }
+});
+
+// PUT User (Password only for simplicity)
+app.put('/api/users/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  const { password } = req.body;
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    const result = await db.query(
+      'UPDATE users SET password_hash = $1 WHERE id = $2 RETURNING id, email',
+      [hash, id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur modification utilisateur' });
+  }
+});
+
+// DELETE User
+app.delete('/api/users/:id', authenticateToken, async (req, res) => {
+  const { id } = req.params;
+  // Prevent deleting self if needed, but for now simple
+  try {
+    await db.query('DELETE FROM users WHERE id = $1', [id]);
+    res.json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur suppression utilisateur' });
   }
 });
 
