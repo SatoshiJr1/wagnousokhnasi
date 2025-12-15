@@ -1,13 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import SEO from '../components/SEO';
+import { useToast } from '../context/ToastContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { addToast } = useToast();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,11 +24,13 @@ const Login = () => {
       const response = await api.post('/auth/login', { email, password });
       if (response.data.success) {
         localStorage.setItem('token', response.data.token);
+        addToast('Connexion réussie !', 'success');
         navigate('/dashboard');
       }
     } catch (err) {
       console.error(err);
       setError('Identifiants incorrects');
+      addToast('Erreur de connexion', 'error');
     }
   };
 

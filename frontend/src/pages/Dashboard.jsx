@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import SEO from '../components/SEO';
+import { useToast } from '../context/ToastContext';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({ productsCount: 0, astucesCount: 0, usersCount: 0, ordersCount: 0 });
@@ -12,6 +13,7 @@ const Dashboard = () => {
   const [editingItem, setEditingItem] = useState(null);
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
+  const { addToast } = useToast();
 
   const fetchData = useCallback(async () => {
     try {
@@ -26,8 +28,9 @@ const Dashboard = () => {
       setItems(itemsRes.data);
     } catch (error) {
       console.error('Error fetching dashboard data', error);
+      addToast('Erreur lors du chargement des données', 'error');
     }
-  }, [activeTab]);
+  }, [activeTab, addToast]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -42,10 +45,11 @@ const Dashboard = () => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
       try {
         await api.delete(`/${activeTab}/${id}`);
+        addToast('Élément supprimé avec succès', 'success');
         fetchData();
       } catch (error) {
         console.error(error);
-        alert('Erreur suppression');
+        addToast('Erreur lors de la suppression', 'error');
       }
     }
   };
@@ -66,8 +70,10 @@ const Dashboard = () => {
     try {
       if (editingItem) {
         await api.put(`/${activeTab}/${editingItem.id}`, formData);
+        addToast('Modification enregistrée', 'success');
       } else {
         await api.post(`/${activeTab}`, formData);
+        addToast('Ajout effectué avec succès', 'success');
       }
       setShowForm(false);
       setEditingItem(null);
@@ -75,7 +81,7 @@ const Dashboard = () => {
       fetchData();
     } catch (error) {
       console.error(error);
-      alert('Erreur enregistrement');
+      addToast("Erreur lors de l'enregistrement", 'error');
     }
   };
 
