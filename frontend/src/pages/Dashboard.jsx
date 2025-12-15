@@ -1,4 +1,4 @@
-import { Lightbulb, Package, Plus, ShoppingBag, Trash2, Edit, Users, Menu, X } from 'lucide-react';
+import { Edit, Lightbulb, Package, Plus, ShoppingBag, Trash2, Users, X } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
@@ -17,12 +17,12 @@ const Dashboard = () => {
     try {
       const statsRes = await api.get('/dashboard/stats');
       setStats(statsRes.data);
-      
+
       let itemsRes;
       if (activeTab === 'products') itemsRes = await api.get('/products');
       else if (activeTab === 'astuces') itemsRes = await api.get('/astuces');
       else if (activeTab === 'users') itemsRes = await api.get('/users');
-      
+
       setItems(itemsRes.data);
     } catch (error) {
       console.error('Error fetching dashboard data', error);
@@ -52,7 +52,12 @@ const Dashboard = () => {
 
   const handleEdit = (item) => {
     setEditingItem(item);
-    setFormData(item);
+    // Ensure nulls are converted to empty strings for inputs
+    const safeData = { ...item };
+    Object.keys(safeData).forEach(key => {
+      if (safeData[key] === null) safeData[key] = '';
+    });
+    setFormData(safeData);
     setShowForm(true);
   };
 
@@ -167,7 +172,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-8 pb-20">
       <SEO title="Tableau de Bord - Wagnou Sokhna Si" noindex={true} />
-      
+
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <h1 className="font-serif text-3xl font-bold text-wagnou-text">Tableau de Bord</h1>
         <button
@@ -251,7 +256,11 @@ const Dashboard = () => {
           <button
             onClick={() => {
               setEditingItem(null);
-              setFormData({});
+              setFormData({
+                name: '', category: '', description: '', price: '', image: '', 
+                title: '', content: '', 
+                email: '', password: ''
+              });
               setShowForm(!showForm);
             }}
             className="flex items-center gap-2 bg-wagnou-primary text-white px-4 py-2 rounded-lg hover:bg-wagnou-secondary transition-colors text-sm shadow-sm"
@@ -270,8 +279,8 @@ const Dashboard = () => {
                 <button type="submit" className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors font-medium">
                   {editingItem ? 'Mettre à jour' : 'Enregistrer'}
                 </button>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => setShowForm(false)}
                   className="flex-1 bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300 transition-colors font-medium"
                 >

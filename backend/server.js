@@ -142,7 +142,7 @@ app.post('/api/products', authenticateToken, async (req, res) => {
   try {
     const result = await db.query(
       'INSERT INTO products (name, category, description, price, image) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, category, description, price, image]
+      [name, category, description || null, price, image || null]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -158,7 +158,7 @@ app.put('/api/products/:id', authenticateToken, async (req, res) => {
   try {
     const result = await db.query(
       'UPDATE products SET name = $1, category = $2, description = $3, price = $4, image = $5 WHERE id = $6 RETURNING *',
-      [name, category, description, price, image, id]
+      [name, category, description || null, price, image || null, id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Produit non trouvé' });
@@ -190,7 +190,7 @@ app.post('/api/astuces', authenticateToken, async (req, res) => {
   try {
     const result = await db.query(
       'INSERT INTO astuces (title, content, image) VALUES ($1, $2, $3) RETURNING *',
-      [title, content, image]
+      [title, content, image || null]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -206,7 +206,7 @@ app.put('/api/astuces/:id', authenticateToken, async (req, res) => {
   try {
     const result = await db.query(
       'UPDATE astuces SET title = $1, content = $2, image = $3 WHERE id = $4 RETURNING *',
-      [title, content, image, id]
+      [title, content, image || null, id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Astuce non trouvée' });
@@ -254,6 +254,15 @@ app.put('/api/users/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
   const { password } = req.body;
   try {
+    if (!password) {
+      // If no password provided, just return the user info without updating
+      const existing = await db.query('SELECT id, email, created_at FROM users WHERE id = $1', [id]);
+      if (existing.rows.length === 0) {
+        return res.status(404).json({ error: 'Utilisateur non trouvé' });
+      }
+      return res.json(existing.rows[0]);
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     const result = await db.query(
