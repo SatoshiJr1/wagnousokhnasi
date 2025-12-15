@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../api';
 import AstuceCard from '../components/AstuceCard';
 import AstuceSkeleton from '../components/AstuceSkeleton';
+import SEO from '../components/SEO';
 
 const SAMPLE_ASTUCES = [
   {
@@ -62,6 +63,11 @@ const Astuces = () => {
 
   return (
     <div className="max-w-3xl mx-auto">
+      <SEO 
+        title="Astuces & Conseils - Wagnou Sokhna Si" 
+        description="Découvrez nos secrets et astuces pour sublimer votre cuisine au quotidien avec les produits Wagnou Sokhna Si."
+        keywords="astuces cuisine, conseils cuisine, recettes sénégalaises, wagnou sokhna si, cuisine facile"
+      />
       <div className="text-center mb-10">
         <h1 className="font-serif text-3xl font-bold text-wagnou-primary mb-4">Astuces & Conseils</h1>
         <p className="text-gray-600">Les petits secrets pour sublimer votre cuisine au quotidien.</p>

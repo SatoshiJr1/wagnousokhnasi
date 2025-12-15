@@ -2,6 +2,7 @@ import { Lightbulb, Package, Plus, ShoppingBag, Trash2 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import SEO from '../components/SEO';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({ productsCount: 0, astucesCount: 0, ordersCount: 0 });
@@ -60,6 +61,10 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-8">
+      <SEO 
+        title="Tableau de Bord - Wagnou Sokhna Si" 
+        noindex={true}
+      />
       <div className="flex justify-between items-center">
         <h1 className="font-serif text-3xl font-bold text-wagnou-text">Tableau de Bord</h1>
         <button

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import SEO from '../components/SEO';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -24,6 +25,11 @@ const Login = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
+      <SEO 
+        title="Connexion Admin - Wagnou Sokhna Si" 
+        description="Page de connexion pour l'administration de Wagnou Sokhna Si."
+        noindex={true}
+      />
       <h2 className="font-serif text-2xl font-bold text-center text-wagnou-primary mb-6">Connexion Admin</h2>
 
       {error && (

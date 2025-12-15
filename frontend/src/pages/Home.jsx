@@ -5,6 +5,7 @@ import CartSidebar from '../components/CartSidebar';
 import Hero from '../components/Hero';
 import ProductCard from '../components/ProductCard';
 import ProductSkeleton from '../components/ProductSkeleton';
+import SEO from '../components/SEO';
 import { useCart } from '../context/CartContext';
 
 // Fallback data in case API fails
@@ -163,6 +164,11 @@ const Home = () => {
 
   return (
     <div className="pb-24 bg-gray-50 min-h-screen">
+      <SEO 
+        title="Accueil" 
+        description="Commandez les meilleurs plats sénégalais à Dakar : Thieboudienne, Yassa, amuse-bouches et jus locaux. Livraison rapide et saveurs authentiques."
+        keywords="restaurant sénégalais, livraison dakar, thieboudienne, yassa, amuse-bouches, jus locaux"
+      />
       <Hero />
 
       <div className="container mx-auto px-4 max-w-7xl">
