@@ -4,13 +4,41 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require('./config/db');
+const multer = require('multer');
+const sharp = require('sharp');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const SECRET_KEY = process.env.JWT_SECRET || 'wagnou_secret_key_simple';
 
+// Ensure images directory exists
+const UPLOAD_DIR = path.join(__dirname, 'images');
+if (!fs.existsSync(UPLOAD_DIR)) {
+  fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+}
+
+// Configure Multer (Memory Storage for processing)
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // Support form-data
+
+// Helper to process and save image
+const processAndSaveImage = async (fileBuffer) => {
+  const filename = `img-${Date.now()}-${Math.round(Math.random() * 1E9)}.webp`;
+  const filepath = path.join(UPLOAD_DIR, filename);
+  
+  await sharp(fileBuffer)
+    .resize(800, 800, { fit: 'inside', withoutEnlargement: true }) // Resize max 800px
+    .webp({ quality: 80 }) // Compress to WebP
+    .toFile(filepath);
+    
+  return `https://assets.nexteranga.com/${filename}`;
+};
 
 // Health Check & DB Test
 app.get('/api/health', async (req, res) => {
@@ -137,12 +165,18 @@ app.get('/api/dashboard/stats', authenticateToken, async (req, res) => {
 // --- PRODUCTS ---
 
 // POST Product
-app.post('/api/products', authenticateToken, async (req, res) => {
-  const { name, category, description, price, image } = req.body;
+app.post('/api/products', authenticateToken, upload.single('image'), async (req, res) => {
+  const { name, category, description, price } = req.body;
+  let imageUrl = req.body.image; // Fallback if URL provided directly
+
   try {
+    if (req.file) {
+      imageUrl = await processAndSaveImage(req.file.buffer);
+    }
+
     const result = await db.query(
       'INSERT INTO products (name, category, description, price, image) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, category, description || null, price, image || null]
+      [name, category, description || null, price, imageUrl || null]
     );
     res.json(result.rows[0]);
   } catch (error) {
@@ -152,13 +186,19 @@ app.post('/api/products', authenticateToken, async (req, res) => {
 });
 
 // PUT Product
-app.put('/api/products/:id', authenticateToken, async (req, res) => {
+app.put('/api/products/:id', authenticateToken, upload.single('image'), async (req, res) => {
   const { id } = req.params;
-  const { name, category, description, price, image } = req.body;
+  const { name, category, description, price } = req.body;
+  let imageUrl = req.body.image;
+
   try {
+    if (req.file) {
+      imageUrl = await processAndSaveImage(req.file.buffer);
+    }
+
     const result = await db.query(
       'UPDATE products SET name = $1, category = $2, description = $3, price = $4, image = $5 WHERE id = $6 RETURNING *',
-      [name, category, description || null, price, image || null, id]
+      [name, category, description || null, price, imageUrl || null, id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Produit non trouvé' });
@@ -173,28 +213,40 @@ app.put('/api/products/:id', authenticateToken, async (req, res) => {
 // DELETE Product
 app.delete('/api/products/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
-  try {
-    await db.query('DELETE FROM products WHERE id = $1', [id]);
-    res.json({ success: true });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erreur suppression produit' });
-  }
-});
+  try {upload.single('image'), async (req, res) => {
+  const { title, content } = req.body;
+  let imageUrl = req.body.image;
 
-// --- ASTUCES ---
-
-// POST Astuce
-app.post('/api/astuces', authenticateToken, async (req, res) => {
-  const { title, content, image } = req.body;
   try {
+    if (req.file) {
+      imageUrl = await processAndSaveImage(req.file.buffer);
+    }
+
     const result = await db.query(
       'INSERT INTO astuces (title, content, image) VALUES ($1, $2, $3) RETURNING *',
-      [title, content, image || null]
+      [title, content, imageUrl || null]
     );
     res.json(result.rows[0]);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: 'Erreur création astuce' });
+  }
+});
+
+// PUT Astuce
+app.put('/api/astuces/:id', authenticateToken, upload.single('image'), async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  let imageUrl = req.body.image;
+
+  try {
+    if (req.file) {
+      imageUrl = await processAndSaveImage(req.file.buffer);
+    }
+
+    const result = await db.query(
+      'UPDATE astuces SET title = $1, content = $2, image = $3 WHERE id = $4 RETURNING *',
+      [title, content, imageUrl
     res.status(500).json({ error: 'Erreur création astuce' });
   }
 });

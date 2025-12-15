@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [formData, setFormData] = useState({});
+  const [imageFile, setImageFile] = useState(null);
   const navigate = useNavigate();
   const { addToast } = useToast();
 
@@ -62,22 +63,36 @@ const Dashboard = () => {
       if (safeData[key] === null) safeData[key] = '';
     });
     setFormData(safeData);
+    setImageFile(null);
     setShowForm(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const data = new FormData();
+      Object.keys(formData).forEach(key => {
+        data.append(key, formData[key]);
+      });
+      if (imageFile) {
+        data.append('image', imageFile);
+      }
+
       if (editingItem) {
-        await api.put(`/${activeTab}/${editingItem.id}`, formData);
+        await api.put(`/${activeTab}/${editingItem.id}`, data, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
         addToast('Modification enregistrée', 'success');
       } else {
-        await api.post(`/${activeTab}`, formData);
+        await api.post(`/${activeTab}`, data, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
         addToast('Ajout effectué avec succès', 'success');
       }
       setShowForm(false);
       setEditingItem(null);
       setFormData({});
+      setImageFile(null);
       fetchData();
     } catch (error) {
       console.error(error);
@@ -97,23 +112,49 @@ const Dashboard = () => {
             required
           />
           <input
-            placeholder="Catégorie"
-            className="p-2 rounded border w-full"
-            value={formData.category || ''}
-            onChange={e => setFormData({...formData, category: e.target.value})}
-            required
-          />
+           div className="w-full">
+            <label className="block text-sm text-gray-600 mb-1">Image du produit</label>
+            <input
+              type="file"
+              accept="image/*"
+              className="p-2 rounded border w-full bg-white"
+              onChange={e => setImageFile(e.target.files[0])}
+            />
+            {(formData.image || imageFile) && (
+              <div className="mt-2">
+                <p className="text-xs text-gray-500 mb-1">Aperçu :</p>
+                <img 
+                  src={imageFile ? URL.createObjectURL(imageFile) : formData.image} 
+                  alt="Aperçu" 
+                  className="h-20 w-20 object-cover rounded border"
+                />
+              </div>
+            )}
+          </div>
           <input
             placeholder="Prix"
             type="number"
             className="p-2 rounded border w-full"
             value={formData.price || ''}
-            onChange={e => setFormData({...formData, price: Number(e.target.value)})}
-            required
-          />
-          <input
-            placeholder="URL Image"
-            className="p-2 rounded border w-full"
+           div className="w-full md:col-span-2">
+            <label className="block text-sm text-gray-600 mb-1">Image de l'astuce</label>
+            <input
+              type="file"
+              accept="image/*"
+              className="p-2 rounded border w-full bg-white"
+              onChange={e => setImageFile(e.target.files[0])}
+            />
+            {(formData.image || imageFile) && (
+              <div className="mt-2">
+                <p className="text-xs text-gray-500 mb-1">Aperçu :</p>
+                <img 
+                  src={imageFile ? URL.createObjectURL(imageFile) : formData.image} 
+                  alt="Aperçu" 
+                  className="h-20 w-20 object-cover rounded border"
+                />
+              </div>
+            )}
+          </div className="p-2 rounded border w-full"
             value={formData.image || ''}
             onChange={e => setFormData({...formData, image: e.target.value})}
           />
@@ -241,7 +282,8 @@ const Dashboard = () => {
             className={`px-6 py-4 text-sm font-medium whitespace-nowrap ${activeTab === 'products' ? 'text-wagnou-primary border-b-2 border-wagnou-primary' : 'text-gray-500 hover:text-gray-700'}`}
           >
             Produits
-          </button>
+          </buttoImageFile(null);
+              setn>
           <button
             onClick={() => { setActiveTab('astuces'); setShowForm(false); }}
             className={`px-6 py-4 text-sm font-medium whitespace-nowrap ${activeTab === 'astuces' ? 'text-wagnou-primary border-b-2 border-wagnou-primary' : 'text-gray-500 hover:text-gray-700'}`}
@@ -263,8 +305,8 @@ const Dashboard = () => {
             onClick={() => {
               setEditingItem(null);
               setFormData({
-                name: '', category: '', description: '', price: '', image: '', 
-                title: '', content: '', 
+                name: '', category: '', description: '', price: '', image: '',
+                title: '', content: '',
                 email: '', password: ''
               });
               setShowForm(!showForm);

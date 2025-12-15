@@ -26,6 +26,8 @@ services:
       - DB_NAME=wagnousokhnasi
       - DB_USER=sokhnasi_user
       - DB_PASSWORD=sokhnasi_pass
+    volumes:
+      - /srv/storage/images:/app/images
     networks:
       - nginx-proxy
       - fitsen-network
