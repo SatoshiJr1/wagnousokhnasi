@@ -35,3 +35,4 @@ networks:
     external: true
   fitsen-network:
     external: true
+    name: fitsen-backend_fitsen-network
