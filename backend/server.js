@@ -107,33 +107,6 @@ app.get('/api/dashboard/stats', async (req, res) => {
 
 // --- ADMIN ROUTES (Simplified) ---
 
-// POST Add Product
-app.post('/api/products', (req, res) => {
-    // Verify token middleware should be here, skipping for simplicity/speed as requested "simple admin"
-    try {
-        const products = readData('products.json');
-        const newProduct = { id: Date.now(), ...req.body };
-        products.push(newProduct);
-        writeData('products.json', products);
-        res.json({ success: true, product: newProduct });
-    } catch (e) {
-        res.status(500).json({ error: 'Erreur ajout produit' });
-    }
-});
-
-// DELETE Product
-app.delete('/api/products/:id', (req, res) => {
-    try {
-        let products = readData('products.json');
-        products = products.filter(p => p.id != req.params.id);
-        writeData('products.json', products);
-        res.json({ success: true });
-    } catch (e) {
-        res.status(500).json({ error: 'Erreur suppression produit' });
-    }
-});
-
-
 // POST Product (Protected)
 app.post('/api/products', async (req, res) => {
   // TODO: Add middleware to verify token

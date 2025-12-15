@@ -31,7 +31,7 @@ const Dashboard = () => {
       return;
     }
 
-    // fetchData();
+    fetchData();
   }, [navigate, fetchData]);
 
   const handleDelete = async (id) => {
